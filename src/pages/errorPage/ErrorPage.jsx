@@ -1,7 +1,7 @@
 const ErrorPage = () => {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-branco">
-        <a className="text-2xl mb-4 hover:font-bold hover:text-blue-500 hover:bg-blue-100 transition-all duration-200 delay-100 rounded-full p-2">
+        <a className="text-2xl mb-4 hover:font-bold hover:text-blue-500 hover:bg-blue-100 transition-all duration-200 delay-100 rounded-full p-2" href="/">
           Voltar para a Página Inicial
         </a>
         <p className="text-5xl font-bold mb-2">404</p>

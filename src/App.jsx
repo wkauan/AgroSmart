@@ -1,16 +1,13 @@
 import Footer from "./components/footer/Footer"
 import Navbar from "./components/navbar/Navbar"
-import Cadastro from "./pages/cadastro/Cadastro"
-import Login from "./pages/login/Login"
+import { Outlet } from "react-router-dom"
 
 function App() {
 
   return (
     <>
       <Navbar />
-      <div className="w-full h-screen"></div>
-      {/* <Cadastro /> */}
-      {/* <Login /> */}
+      <Outlet />
       <Footer />
     </>
   )

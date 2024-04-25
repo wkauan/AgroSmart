@@ -68,7 +68,7 @@ const Login = () => {
 
                         {/* Campo para página de cadastro */}
                         <section className="flex justify-center m-5">
-                            <a className="text-sm text-blue-400 hover:font-bold transition-all duration-200 delay-100">Ainda não possui uma conta? Cadastre-se</a>
+                            <a className="text-sm text-blue-400 hover:font-bold transition-all duration-200 delay-100 cursor-pointer">Ainda não possui uma conta? Cadastre-se</a>
                         </section>
 
                         {/* Botão para entrar */}
