@@ -12,6 +12,7 @@ import ErrorPage from './pages/errorPage/ErrorPage.jsx'
 import Login from './pages/login/Login.jsx'
 import Contact from './pages/contact/Contact.jsx'
 import AboutUs from './pages/aboutUs/AboutUs.jsx'
+import Terms from './pages/terms/Terms.jsx'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "sobre-nos",
         element: <AboutUs />
+      },
+      {
+        path: "termos",
+        element: <Terms />
       }
     ]
   }
