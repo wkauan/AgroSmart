@@ -13,6 +13,7 @@ import Login from './pages/login/Login.jsx'
 import Contact from './pages/contact/Contact.jsx'
 import AboutUs from './pages/aboutUs/AboutUs.jsx'
 import Terms from './pages/terms/Terms.jsx'
+import Privacy from './pages/privacy/Privacy.jsx'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "termos",
         element: <Terms />
+      },
+      {
+        path: "privacidade",
+        element: <Privacy />
       }
     ]
   }

@@ -44,7 +44,7 @@ const Cadastro = () => {
                         </section>
 
                         <section className="flex justify-center mb-5">
-                            <p className="text-sm">Ao continuar você concorda com nossa <a className="font-medium hover:font-bold transition-all duration-200 delay-100 cursor-pointer">política de privacidade</a>.</p>
+                            <p className="text-sm">Ao continuar você concorda com nossa <Link to="/privacidade" className="font-medium hover:font-bold transition-all duration-200 delay-100 cursor-pointer">política de privacidade</Link>.</p>
                         </section>
 
                         {/* Botão para cadastrar */}
