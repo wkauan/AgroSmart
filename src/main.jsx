@@ -10,6 +10,7 @@ import Home from './pages/home/Home.jsx'
 import Cadastro from './pages/cadastro/Cadastro.jsx'
 import ErrorPage from './pages/errorPage/ErrorPage.jsx'
 import Login from './pages/login/Login.jsx'
+import Contact from './pages/contact/Contact.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />
+      },
+      {
+        path: "contato",
+        element: <Contact />
       }
     ]
   }
