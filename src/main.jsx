@@ -11,6 +11,7 @@ import Cadastro from './pages/cadastro/Cadastro.jsx'
 import ErrorPage from './pages/errorPage/ErrorPage.jsx'
 import Login from './pages/login/Login.jsx'
 import Contact from './pages/contact/Contact.jsx'
+import AboutUs from './pages/aboutUs/AboutUs.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "contato",
         element: <Contact />
+      },
+      {
+        path: "sobre-nos",
+        element: <AboutUs />
       }
     ]
   }
