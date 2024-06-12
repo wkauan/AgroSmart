@@ -13,6 +13,13 @@ Bem-vindo ao AgroSmart, onde a inovação transforma a agricultura. Nosso sistem
     Após isso siga as instruções abaixo de acordo com seu sistema operacional.
 ```
 
+### Com o NodeJs instalado execute:
+
+```console
+    npm i
+    npm run dev
+```
+
 ### Integrantes
 
 - [Kauan Bomfim](https://github.com/wkauan)
