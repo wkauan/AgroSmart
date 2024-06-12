@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-// import Slider from '../../components/slider/Slider'
+import Slider from '../../components/slider/Slider'
 
 const Home = () => {
   const Navigate = useNavigate();
@@ -9,8 +9,8 @@ const Home = () => {
   }
 
   return (
-    <header className="w-full md:h-screen mt-44">
-      {/* <Slider /> */}
+    <header className="w-full h-full mt-44">
+      <Slider />
 
       {/* titulo */}
       <div className='md:flex justify-center mt-24'>
@@ -35,7 +35,7 @@ const Home = () => {
 
 
       {/* botao para formulario */}
-      <div className='md:flex justify-center px-48 mt-12'>
+      <div className='flex justify-center px-6 md:px-0 mt-12'>
         <section>
           <button className='bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-700 transition duration-300 mb-5' onClick={contact}>
             Entrar em contato!

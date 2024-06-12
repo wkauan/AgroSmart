@@ -2,12 +2,14 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, A11y, Autoplay } from 'swiper/modules';
 
-import Logo from '/static/logo/logo.png'
+import Imagem1 from '/static/slider/img1.jpg'
+import Imagem2 from '/static/slider/img2.jpg'
+import Imagem3 from '/static/slider/img3.jpeg'
 
 import 'swiper/css/bundle'
 
 const Slider = () => {
-    const img = [Logo];
+    const img = [Imagem1, Imagem2, Imagem3];
 
     return (
         <div className='w-full bg-branco mt-44'>
@@ -21,7 +23,7 @@ const Slider = () => {
 
                 {img.map(img => (
                     <SwiperSlide key={img}>
-                        <img className='w-full object-cover h-[450px]' src={img} alt="Produtos mais vendidos" />
+                        <img className='w-full object-cover h-[450px]' src={img} alt="Imagens do slider" />
                     </SwiperSlide>
                 ))}
             </Swiper>
