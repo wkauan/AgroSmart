@@ -65,6 +65,32 @@ def login():
         else:
             return jsonify({"message": "Email ou senha incorretos"}), 401
 
+@app.route("/cadastro_contato", methods=["POST"])
+def cadastro_Contato():
+    name = request.json.get("NameContato")
+    telefone = request.json.get("TelefoneContato")
+    email = request.json.get("EmailContato")
+
+    if not name or not telefone or not email:
+        return (
+            jsonify({
+                "message": "Você precisa informar um nome, telefone e email"
+                }), 400,
+        )
+
+    new_contact = User(name=name, telefone=telefone, email=email)
+    try:
+        db.session.add(new_contact)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({
+            "message": str(e)
+        }), 400
+
+    return jsonify({
+        "message": "Contato cadastrato"
+    }), 201
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
