@@ -42,6 +42,28 @@ def cadastro():
         "message": "Usuário cadastrato"
     }), 201
 
+@app.route("/login", methods=["POST"])
+def login():
+    email = request.json.get("Email")
+    password = request.json.get("Password")
+
+    if not email or not password:
+        return jsonify({
+            "message": "Você precisa informar um email e senha"
+        }), 400
+
+    user = User.query.filter.by(email=email).first()
+
+    h = hashlib.new("SHA256")
+    h.update(password.encode())
+
+    if user:
+        hash_password = h.hexdigest()
+
+        if hash_password == user.password:
+            return jsonify({"message": "Login bem-sucedido"}), 200
+        else:
+            return jsonify({"message": "Email ou senha incorretos"}), 401
 
 if __name__ == "__main__":
     with app.app_context():
