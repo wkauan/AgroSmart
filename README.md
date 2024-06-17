@@ -4,7 +4,6 @@ Bem-vindo ao AgroSmart, onde a inovação transforma a agricultura. Nosso sistem
 
 ## Necessário para rodar o projeto
 - `Python`: Instale o python em [https://www.python.org/downloads/]
-- `Mongodb`: Instale o mongodb em [https://www.mongodb.com/try/download/community]
 - `NodeJS`: Instale o nodejs em [https://nodejs.org/en/download/current]
 
 ## Como executar o projeto
