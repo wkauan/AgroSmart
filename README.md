@@ -8,17 +8,25 @@ Bem-vindo ao AgroSmart, onde a inovação transforma a agricultura. Nosso sistem
 - `NodeJS`: Instale o nodejs em [https://nodejs.org/en/download/current]
 
 ## Como executar o projeto
-```console
-    Abra o MongoDBCompass e crie um database com o nome de agrosmart e uma colecão de mesmo nome (agrosmart).
-    Após isso siga as instruções abaixo de acordo com seu sistema operacional.
-```
 
 ### Com o NodeJs instalado execute:
 
 ```console
+    cd frontend
     npm i
     npm run dev
 ```
+
+### Com o Python instalado execute:
+
+```console
+    cd backend
+    python -m venv .venv
+    .\.venv\Scripts\activate
+    pip install -r requirements.txt
+```
+
+Se encontrar dificuldades ao iniciar a virtual environment (venv), execute o seguinte comando no terminal: `Set-ExecutionPolicy -scope Process -ExecutionPolicy Bypass`
 
 ### Integrantes
 
