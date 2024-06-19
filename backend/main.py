@@ -13,6 +13,9 @@ def get_contacts():
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
+    data = request.json
+    print(data)
+    
     name = request.json.get("Name")
     telefone = request.json.get("Telefone")
     email = request.json.get("Email")
@@ -24,6 +27,13 @@ def cadastro():
                 "message": "Você precisa informar um nome, telefone, email e senha"
                 }), 400,
         )
+
+    verifySignUp = User.query.filter_by(email=email).first()
+
+    if verifySignUp:
+        return jsonify({
+            "message": "Usuário já cadastrado"
+        }), 409
 
     h = hashlib.new("SHA256")
     h.update(password.encode())
@@ -39,7 +49,7 @@ def cadastro():
         }), 400
 
     return jsonify({
-        "message": "Usuário cadastrato"
+        "message": "Usuário cadastrato com sucesso"
     }), 201
 
 @app.route("/login", methods=["POST"])
@@ -52,7 +62,7 @@ def login():
             "message": "Você precisa informar um email e senha"
         }), 400
 
-    user = User.query.filter.by(email=email).first()
+    user = User.query.filter_by(email=email).first()
 
     h = hashlib.new("SHA256")
     h.update(password.encode())
