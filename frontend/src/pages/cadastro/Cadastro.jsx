@@ -1,8 +1,51 @@
+import axios from 'axios';
+import { toast, Bounce } from 'react-toastify';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
+import { baseURL } from '../../utils/Utils';
+import Toast from '../../components/toast/Toast';
+
 const Cadastro = () => {
+    const [cadastro, setCadastro] = useState({
+        id: '800',
+        Name: 'lucas Roger Xavier 242',
+        Telefone: '5145442',
+        Email: 'l4uc5as5544@gmail.com',
+        Password: '4956865toikkau7',
+
+    });
+
+    const fetchCadastro = async (e) => {
+        try {
+            e.preventDefault();
+
+            const response = await axios.post(`${baseURL}cadastro`, cadastro, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.data
+
+            if (response.status === 201) {
+                notifySuccess(data.message);
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (err) {
+            if (err.response) {
+                notifyError(err.response.data.message);
+            } else {
+                notifyError('Erro desconhecido ao processar a solicitação');
+            }
+        }
+    };
+
     return (
         <header className="mt-60 md:mt-44 w-full py-8 h-screen">
+            <Toast />
             <section className="max-w-md mx-auto">
                 <form id="formsCadastro" className="bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-3xl font-bold mb-4 text-center">Faça o seu cadastro</h2>
@@ -49,7 +92,7 @@ const Cadastro = () => {
 
                         {/* Botão para cadastrar */}
                         <section className="flex justify-center">
-                            <button type="submit" className="w-40 h-10 mb-4 bg-cinza text-white hover:w-44 hover:font-bold transition-all duration-200 delay-100">
+                            <button type="submit" onClick={fetchCadastro} className="w-40 h-10 mb-4 bg-cinza text-white hover:w-44 hover:font-bold transition-all duration-200 delay-100">
                                 <span>Cadastrar</span>
                             </button>
                         </section>
