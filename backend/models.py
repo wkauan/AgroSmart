@@ -17,10 +17,10 @@ class User(db.Model):
         }
 
 class Contact(db.Model):
-    idContato = db.Column(db.Integer, primary_key=True)
-    nameContato = db.Column(db.String(80), unique=False, nullable=False)
-    telefoneContato = db.Column(db.String(11), unique=True, nullable=False)
-    emailContato = db.Column(db.String(120), unique=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    telefone = db.Column(db.String(11), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
 
     def to_json(self):
         return {
