@@ -19,11 +19,17 @@ def cadastro():
     password = request.json.get("Password")
 
     if not name or not telefone or not email or not password:
-        return (
-            jsonify({
-                "message": "Você precisa informar um nome, telefone, email e senha"
-                }), 400,
-        )
+        return jsonify({
+            "message": "Você precisa informar um nome, telefone, email e senha"
+            }), 400
+    elif '@' not in email:
+        return jsonify({
+            "message": "O email informado não é válido"
+        }), 400
+    elif len(telefone) != 11:
+        return jsonify({
+            "message": "O telefone informado não é válido. O telefone deve conter exatamente 11 caracteres."
+        }), 400
 
     h = hashlib.new("SHA256")
     h.update(password.encode())
@@ -58,6 +64,10 @@ def login():
         return jsonify({
             "message": "Você precisa informar um email e senha"
         }), 400
+    elif '@' not in email:
+        return jsonify({
+            "message": "O email informado não é válido"
+        }), 400
 
     user = User.query.filter_by(email=email).first()
 
@@ -76,18 +86,32 @@ def login():
 
 @app.route("/cadastro_contato", methods=["POST"])
 def cadastro_Contato():
-    name = request.json.get("NameContato")
-    telefone = request.json.get("TelefoneContato")
-    email = request.json.get("EmailContato")
+    name = request.json.get("Name")
+    telefone = request.json.get("Telefone")
+    email = request.json.get("Email")
 
     if not name or not telefone or not email:
-        return (
-            jsonify({
-                "message": "Você precisa informar um nome, telefone e email"
-                }), 400,
-        )
+        return jsonify({
+            "message": "Você precisa informar um nome, telefone e email"
+            }), 400,
+    elif '@' not in email:
+        return jsonify({
+            "message": "O email informado não é válido"
+        }), 400
+    elif len(telefone) != 11:
+        return jsonify({
+            "message": "O telefone informado não é válido. O telefone deve conter exatamente 11 caracteres."
+        }), 400
 
-    new_contact = User(name=name, telefone=telefone, email=email)
+    contact = Contact.query.filter_by(email=email).first()
+
+    if contact:
+        return jsonify({
+            "message": "Contato já cadastrado"
+        }), 409
+
+
+    new_contact = Contact(name=name, telefone=telefone, email=email)
     try:
         db.session.add(new_contact)
         db.session.commit()
