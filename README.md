@@ -23,6 +23,7 @@ Bem-vindo ao AgroSmart, onde a inovação transforma a agricultura. Nosso sistem
     python -m venv .venv
     .\.venv\Scripts\activate
     pip install -r requirements.txt
+    py main.py
 ```
 
 Se encontrar dificuldades ao iniciar a virtual environment (venv), execute o seguinte comando no terminal: `Set-ExecutionPolicy -scope Process -ExecutionPolicy Bypass`
@@ -37,7 +38,7 @@ Se encontrar dificuldades ao iniciar a virtual environment (venv), execute o seg
 | ------ | ------ |
 | **Scrum Master** | Vitor Carvalho |
 | **Documentação** | Vitor Carvalho |
-| **Desenvolvedor Back-End** | Kauan Bomfim |
 | **Desenvolvedor Front-End** | Kauan Bomfim |
-| **Desenvolvedor ESP32** | Thiago Rodrigues |
-| **Banco de dados** | Thiago Rodrigues e Vitor Carvalho |
+| **Desenvolvedor Back-End** | Kauan Bomfim |
+| **Banco de dados** | Kauan Bomfim |
+| **Desenvolvedor ESP32** | Thiago Rodrigues e Vitor Carvalho |
