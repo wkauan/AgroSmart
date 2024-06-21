@@ -6,6 +6,8 @@ import './index.css'
 // Rotas
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext.jsx'
+
 import Cadastro from './pages/cadastro/Cadastro.jsx'
 import ErrorPage from './pages/errorPage/ErrorPage.jsx'
 import Login from './pages/login/Login.jsx'
@@ -14,6 +16,7 @@ import AboutUs from './pages/aboutUs/AboutUs.jsx'
 import Terms from './pages/terms/Terms.jsx'
 import Privacy from './pages/privacy/Privacy.jsx'
 import Loading from './components/fallback/Loading.jsx'
+import Dashboard from './pages/dashboard/Dashboard.jsx'
 
 async function delay(promise) {
   return await new Promise(resolve => {
@@ -35,11 +38,15 @@ const router = createBrowserRouter([
       },
       {
         path: "cadastro",
-        element: <Cadastro />
+        element: <AuthProvider> <Cadastro /> </AuthProvider>
       },
       {
         path: "login",
-        element: <Login />
+        element: <AuthProvider> <Login /> </AuthProvider>
+      },
+      {
+        path: "painel",
+        element: <AuthProvider> <Dashboard /> </AuthProvider>
       },
       {
         path: "contato",
