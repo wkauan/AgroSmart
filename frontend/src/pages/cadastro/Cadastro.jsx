@@ -1,17 +1,16 @@
 import axios from 'axios';
-import { toast, Bounce } from 'react-toastify';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
 import { baseURL } from '../../utils/Utils';
-import Toast from '../../components/toast/Toast';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { NotifyError, NotifySuccess } from '../../components/toast/notify/Notify.jsx';
 
 const Cadastro = () => {
     const { login } = useAuth();
     const Navigate = useNavigate();
 
-    const [cadastro, setCadastro] = useState({
+    const [formData, setformData] = useState({
         Name: '',
         Telefone: '',
         Email: '',
@@ -19,53 +18,25 @@ const Cadastro = () => {
         confirmPassword: '',
     });
 
-    const notifyError = (message) => {
-        toast.error(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-        });
-    };
-
-    const notifySuccess = (message) => {
-        toast.success(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-        });
-    }
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setCadastro({ ...cadastro, [name]: value });
+        setformData({ ...formData, [name]: value });
     }
 
     const fetchCadastro = async (e) => {
         e.preventDefault();
 
-        if (cadastro.Password !== cadastro.confirmPassword) {
-            notifyError("As senhas não coincidem");
+        if (formData.Password !== formData.confirmPassword) {
+            NotifyError("As senhas não coincidem");
             return;
         }
 
         try {
             const response = await axios.post(`${baseURL}cadastro`, {
-                Name: cadastro.Name,
-                Telefone: cadastro.Telefone,
-                Email: cadastro.Email,
-                Password: cadastro.Password
+                Name: formData.Name,
+                Telefone: formData.Telefone,
+                Email: formData.Email,
+                Password: formData.Password
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,8 +45,10 @@ const Cadastro = () => {
 
             if (response.status === 201) {
                 login(response.data.name);
-                
+
                 localStorage.setItem('isAuthenticated', 'true');
+
+                NotifySuccess(response.data.message);
 
                 Navigate("/painel")
             } else {
@@ -83,9 +56,9 @@ const Cadastro = () => {
             }
         } catch (err) {
             if (err.response) {
-                notifyError(err.response.data.message);
+                NotifyError(err.response.data.message);
             } else {
-                notifyError('Erro desconhecido ao processar a solicitação');
+                NotifyError('Erro desconhecido ao processar a solicitação');
             }
         }
     };
@@ -99,7 +72,6 @@ const Cadastro = () => {
 
     return (
         <header className="mt-60 md:mt-44 w-full py-8 h-screen">
-            <Toast />
             <section className="max-w-md mx-auto">
                 <form id="formsCadastro" className="bg-white p-6 rounded-lg shadow-md" onSubmit={fetchCadastro}>
                     <h2 className="text-3xl font-bold mb-4 text-center">Faça o seu cadastro</h2>

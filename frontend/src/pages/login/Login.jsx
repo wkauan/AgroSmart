@@ -1,33 +1,19 @@
 import axios from 'axios';
-import { toast, Bounce } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { baseURL } from '../../utils/Utils';
-import Toast from '../../components/toast/Toast';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import { NotifyError, NotifySuccess } from '../../components/toast/notify/Notify.jsx';
 
 const Login = () => {
     const { login } = useAuth();
     const Navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
+        Email: '',
+        Password: '',
     });
-
-    const notifyError = (message) => {
-        toast.error(message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-        });
-    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -39,8 +25,8 @@ const Login = () => {
 
         try {
             const response = await axios.post(`${baseURL}login`, {
-                Email: formData.email,
-                Password: formData.password,
+                Email: formData.Email,
+                Password: formData.Password,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,15 +38,17 @@ const Login = () => {
 
                 localStorage.setItem('isAuthenticated', 'true');
 
+                NotifySuccess(response.data.message);
+
                 Navigate("/painel");
             } else {
                 throw new Error(response.data.message);
             }
         } catch (err) {
             if (err.response) {
-                notifyError(err.response.data.message);
+                NotifyError(err.response.data.message);
             } else {
-                notifyError('Erro desconhecido ao processar a solicitação');
+                NotifyError('Erro desconhecido ao processar a solicitação');
             }
         }
     };
@@ -74,7 +62,6 @@ const Login = () => {
 
     return (
         <header className="mt-60 md:mt-44 w-full py-8 h-screen">
-            <Toast />
             <section className="max-w-md mx-auto">
                 <form id="formsLogin" className="bg-white p-6 rounded-lg shadow-md" onSubmit={fetchLogin}>
                     <h2 className="text-3xl font-bold mb-4 text-center">Faça login</h2>
