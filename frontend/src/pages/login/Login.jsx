@@ -7,40 +7,45 @@ import { useAuth } from '../../contexts/AuthContext.jsx';
 import { NotifyError, NotifySuccess } from '../../components/toast/notify/Notify.jsx';
 
 const Login = () => {
-    const { login } = useAuth();
-    const Navigate = useNavigate();
+    const { user, login } = useAuth();
+    const navigate = useNavigate();
 
+    // Estado para armazenar os dados do formulário de login
     const [formData, setFormData] = useState({
-        Email: '',
-        Password: '',
+        email: '',
+        password: '',
     });
 
+    // Função para atualizar o estado do formulário com as mudanças nos inputs
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    // Função para lidar com o envio do formulário de login
     const fetchLogin = async (e) => {
         e.preventDefault();
 
         try {
+            // Requisição POST para o backend com os dados do formulário
             const response = await axios.post(`${baseURL}login`, {
-                Email: formData.Email,
-                Password: formData.Password,
+                Email: formData.email,
+                Password: formData.password,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
+            // Se o login for bem-sucedido (status 200)
             if (response.status === 200) {
                 login();
 
-                localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('user', 'true');
 
                 NotifySuccess(response.data.message);
 
-                Navigate("/painel");
+                navigate("/painel");
             } else {
                 throw new Error(response.data.message);
             }
@@ -53,12 +58,12 @@ const Login = () => {
         }
     };
 
+    // Efeito para verificar se o usuário já está autenticado e redirecionar para o painel
     useEffect(() => {
-        const isAuthenticated = localStorage.getItem('isAuthenticated');
-        if (isAuthenticated === 'true') {
-            Navigate("/painel");
+        if (user) {
+            navigate("/painel");
         }
-    }, [Navigate]);
+    }, [user, navigate]);
 
     return (
         <header className="mt-60 md:mt-44 w-full py-8 h-screen">
@@ -96,14 +101,14 @@ const Login = () => {
                             />
                         </section>
 
-                        {/* Campo para página de cadastro */}
+                        {/* Link para página de cadastro */}
                         <section className="flex justify-center m-5">
                             <Link to="/cadastro" className="text-sm text-blue-400 hover:font-bold transition-all duration-200 delay-100 cursor-pointer">
                                 Ainda não possui uma conta? Cadastre-se
                             </Link>
                         </section>
 
-                        {/* Botão para entrar */}
+                        {/* Botão de entrar */}
                         <section className="flex justify-center">
                             <button type="submit" className="w-40 h-10 mb-4 bg-cinza text-white hover:w-44 hover:font-bold transition-all duration-200 delay-100">
                                 <span>Entrar</span>
