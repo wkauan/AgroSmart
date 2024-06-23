@@ -39,9 +39,7 @@ const Login = () => {
 
             // Se o login for bem-sucedido (status 200)
             if (response.status === 200) {
-                login();
-
-                localStorage.setItem('user', 'true');
+                login(response.data);
 
                 NotifySuccess(response.data.message);
 

@@ -50,9 +50,7 @@ const Cadastro = () => {
 
             // Se o cadastro for bem-sucedido (status 201)
             if (response.status === 201) {
-                login(response.data.name);
-
-                localStorage.setItem('isAuthenticated', 'true');
+                login(response.data);
 
                 NotifySuccess(response.data.message);
 
