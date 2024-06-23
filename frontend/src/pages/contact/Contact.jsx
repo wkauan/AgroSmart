@@ -45,7 +45,7 @@ const Contact = () => {
     };
 
     return (
-        <header className="mt-60 md:mt-44 w-full py-8 h-screen">
+        <header className="mt-56 md:mt-44 w-full py-8 h-screen">
             <section className="max-w-md mx-auto">
                 <form id="formsContact" className="bg-white p-6 rounded-lg shadow-md" onSubmit={fetchContact}>
                     <h2 className="text-3xl font-bold mb-4 text-center">Entre em contato conosco</h2>
