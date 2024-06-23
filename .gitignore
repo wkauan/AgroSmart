@@ -1,4 +1,14 @@
+# Ignorar a pasta node_modules onde ficam as dependências do projeto Node.js
 node_modules
+
+# Ignorar a pasta .venv onde ficam as dependências de ambientes virtuais Python
 .venv
+
+# Ignorar a pasta __pycache__ onde ficam os arquivos compilados do Python
 __pycache__
+
+# Ignorar a pasta instance que pode conter arquivos de configuração específicos do Flask
 instance
+
+# Ignorar o arquivo .env onde ficam as variáveis de ambiente e outras informações sensíveis
+*.local
