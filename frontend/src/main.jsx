@@ -29,7 +29,7 @@ const LazyHome = lazy(() => delay(import('./pages/home/Home.jsx')))
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <AuthProvider> <App /> </AuthProvider>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -38,15 +38,15 @@ const router = createBrowserRouter([
       },
       {
         path: "cadastro",
-        element: <AuthProvider> <Cadastro /> </AuthProvider>
+        element: <Cadastro />
       },
       {
         path: "login",
-        element: <AuthProvider> <Login /> </AuthProvider>
+        element: <Login />
       },
       {
         path: "painel",
-        element: <AuthProvider> <Dashboard /> </AuthProvider>
+        element: <Dashboard />
       },
       {
         path: "contato",
@@ -70,6 +70,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider  router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
