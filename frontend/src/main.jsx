@@ -8,15 +8,11 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext.jsx'
 
-// import Cadastro from './pages/cadastro/Cadastro.jsx'
 import ErrorPage from './pages/errorPage/ErrorPage.jsx'
-// import Login from './pages/login/Login.jsx'
-// import Contact from './pages/contact/Contact.jsx'
 import AboutUs from './pages/aboutUs/AboutUs.jsx'
 import Terms from './pages/terms/Terms.jsx'
 import Privacy from './pages/privacy/Privacy.jsx'
 import Loading from './components/fallback/Loading.jsx'
-// import Home from './pages/home/Home.jsx'
 
 async function delay(promise) {
   return await new Promise(resolve => {
@@ -29,6 +25,7 @@ const LazyHome = lazy(() => delay(import('./pages/home/Home.jsx')))
 const LazyCadastro = lazy(() => delay(import('./pages/cadastro/Cadastro.jsx')));
 const LazyLogin = lazy(() => delay(import('./pages/login/Login.jsx')));
 const LazyContact = lazy(() => delay(import('./pages/contact/Contact.jsx')));
+const LazyHistory = lazy(() => delay(import('./pages/dashboard/history/History.jsx')));
 
 const router = createBrowserRouter([
   {
@@ -51,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "painel",
         element: <Suspense fallback={<Loading />}> <LazyDash /> </Suspense>
+      },
+      {
+        path: "historico",
+        element: <Suspense fallback={<Loading />}> <LazyHistory /> </Suspense>
       },
       {
         path: "contato",

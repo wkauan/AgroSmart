@@ -1,7 +1,8 @@
 from flask import request, jsonify
 import hashlib
 from config import app, db
-from models import User, Contact
+from models import User, Contact, Sensor
+import requests
 
 @app.route("/contacts", methods=["GET"])
 def get_contacts():
@@ -106,6 +107,32 @@ def sensorUpload():
     return jsonify({
         "message": "Dados dos sensores cadastrados com sucesso"
     }), 201
+
+@app.route("/sensores", methods=['POST'])
+def add_sensor_data():
+    try:
+        data = request.get_json()
+
+        temperatura = data.get('temperatura')
+        umidade = data.get('umidade')
+        image_base64 = data.get('image', None)
+
+        new_sensor = Sensor(temperatura=temperatura, umidade=umidade, image_base64=image_base64)
+        db.session.add(new_sensor)
+        db.session.commit()
+
+        return jsonify(new_sensor.to_json()), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/sensor_history', methods=['GET'])
+def sensor_history():
+    try:
+        sensors = Sensor.query.all()
+        sensor_data = [sensor.to_json() for sensor in sensors]
+        return jsonify(sensor_data), 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 @app.route("/cadastro_contato", methods=["POST"])
 def cadastro_Contato():

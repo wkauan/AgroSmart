@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { useAuth } from '../../contexts/AuthContext.jsx';
@@ -7,7 +7,7 @@ import { baseURL } from '../../utils/Utils.js';
 import { NotifyError } from '../../components/toast/notify/Notify.jsx';
 
 const Dashboard = () => {
-  const user = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [temperature, setTemperature] = useState('');
@@ -22,43 +22,33 @@ const Dashboard = () => {
 
   const fetchDataFromServer = async () => {
     try {
-      const response = await axios.post('http://192.168.0.10:8000/sensores'); // Altere o endpoint conforme necessário
-      const { temperatura, umidade, imagem } = response.data;
-
-      setTemperature(temperatura);
-      setHumidity(umidade);
-      setImageData(imagem);
-    } catch (error) {
-      NotifyError('Erro ao obter dados do servidor:', error);
-    }
-  };
-
-  const fetchSensorUpload = async () => {
-    try {
-        const response = await axios.post(`${baseURL}sensor_upload`, {
-            Tempatura: temperature,
-            Umidade: humidity
+        const response = await axios.post(`${baseURL}sensores`, {
+            // Aqui você precisa enviar os dados esperados pelo backend
+            temperatura: 25.56,
+            umidade: 70,
+            // image: 'base64_encoded_image_data_here' // Se necessário, envie a imagem codificada em base64
         }, {
             headers: {
-                'Content-Type': 'application/json',
-            },
+                'Content-Type': 'application/json'
+            }
         });
 
-        if (response.status !== 201) {
-          throw new Error(response.data.message);
+        const sensors = response.data;
+
+        if (sensors.length > 0) {
+            const { temperatura, umidade, image } = sensors[0];
+            setTemperature(temperatura);
+            setHumidity(umidade);
+            setImageData(image);
         }
-    } catch (err) {
-        if (err.response) {
-            NotifyError(err.response.data.message);
-        } else {
-            NotifyError('Erro desconhecido ao processar a solicitação');
-        }
+    } catch (error) {
+        console.error('Erro ao obter dados do servidor:', error);
+        NotifyError('Erro ao obter dados do servidor: ' + error.message);
     }
 };
 
   useEffect(() => {
     fetchDataFromServer(); // Carregar dados iniciais ao montar o componente
-    fetchSensorUpload();
     const interval = setInterval(fetchDataFromServer, 60000); // Atualizar dados a cada minuto
 
     return () => clearInterval(interval); // Limpar intervalo ao desmontar o componente
@@ -96,7 +86,9 @@ const Dashboard = () => {
               <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h1m10 10h7M7 7h10M5 13h5M17 7h2m-6 6h6M9 21v-6a3 3 0 013-3h7" />
               </svg>
-              Ver Histórico
+              <Link to="/historico">
+                Ver Histórico
+              </Link>
             </button>
           </div>
         </div>
