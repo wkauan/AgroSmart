@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 #root {
-    background-color: #EBEBEB;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); /* Gradiente de fundo */
+    font-family: 'Rubik', sans-serif; 
+
 }
