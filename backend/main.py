@@ -84,6 +84,29 @@ def login():
     else:
         return jsonify({"message": "Usuário não cadastrado"}), 401
 
+@app.route("/sensor_upload", methods=["POST"])
+def sensorUpload():
+    temperatura = request.json.get("Temperatura")
+    umidade = request.json.get("Umidade")
+    image = request.json.get("Image")
+
+    if not temperatura or not umidade or not image:
+        return jsonify({"message": "Temperatura e/ou umidade e/ou imagem não fornecidas corretamente"}), 400
+
+    new_data(temperatura=temperatura, umidade=umidade, image=image)
+
+    try:
+        db.session.add(new_data)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({
+            "message": str(e)
+        }), 400
+
+    return jsonify({
+        "message": "Dados dos sensores cadastrados com sucesso"
+    }), 201
+
 @app.route("/cadastro_contato", methods=["POST"])
 def cadastro_Contato():
     name = request.json.get("Name")
