@@ -3,56 +3,43 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { useAuth } from '../../contexts/AuthContext.jsx';
-import { baseURL } from '../../utils/Utils.js';
 import { NotifyError } from '../../components/toast/notify/Notify.jsx';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [temperature, setTemperature] = useState('');
-  const [humidity, setHumidity] = useState('');
-  const [imageData, setImageData] = useState('');
+  const [temperature, setTemperature] = useState(null);
+  const [humidity, setHumidity] = useState(null);
 
   useEffect(() => {
     if (!user) {
       navigate('/login');
+    } else {
+      fetchDataFromServer();
     }
   }, [user, navigate]);
 
   const fetchDataFromServer = async () => {
     try {
-        const response = await axios.post(`${baseURL}sensores`, {
-            // Aqui você precisa enviar os dados esperados pelo backend
-            temperatura: 25.56,
-            umidade: 70,
-            // image: 'base64_encoded_image_data_here' // Se necessário, envie a imagem codificada em base64
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+      const response = await axios.get('http://192.168.0.10:8000/get_sensores');
+      const data = response.data;
 
-        const sensors = response.data;
+      console.log('Dados recebidos:', data);
 
-        if (sensors.length > 0) {
-            const { temperatura, umidade, image } = sensors[0];
-            setTemperature(temperatura);
-            setHumidity(umidade);
-            setImageData(image);
-        }
+      // Verifique se há dados de sensores na resposta
+      if (Array.isArray(data) && data.length > 0) {
+        // Vamos assumir que estamos interessados no primeiro sensor da lista
+        const firstSensor = data[0];
+        setTemperature(firstSensor.temperature);
+        setHumidity(firstSensor.humidity);
+      } else {
+        NotifyError('Nenhum dado de sensor encontrado');
+      }
     } catch (error) {
-        console.error('Erro ao obter dados do servidor:', error);
-        NotifyError('Erro ao obter dados do servidor: ' + error.message);
+      NotifyError('Erro ao obter dados de sensores');
     }
-};
-
-  useEffect(() => {
-    fetchDataFromServer(); // Carregar dados iniciais ao montar o componente
-    const interval = setInterval(fetchDataFromServer, 60000); // Atualizar dados a cada minuto
-
-    return () => clearInterval(interval); // Limpar intervalo ao desmontar o componente
-  }, [temperature, humidity]);
+  };
 
   return (
     <div className="flex flex-col mt-40 items-center justify-center min-h-screen py-8 bg-gray-100">
@@ -64,20 +51,13 @@ const Dashboard = () => {
           {/* Temperatura */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-700">Temperatura</h2>
-            <p className="text-gray-600">{temperature} °C</p>
+            <p className="text-gray-600">{temperature !== null ? `${temperature} °C` : 'Carregando...'}</p>
           </div>
 
           {/* Umidade */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-gray-700">Umidade</h2>
-            <p className="text-gray-600">{humidity} %</p>
-          </div>
-
-          {/* Imagem da Câmera */}
-          <div className="mb-6">
-            {imageData && (
-              <img src={`data:image/jpeg;base64,${imageData}`} alt="Imagem da câmera" className="w-full rounded-lg shadow-lg" />
-            )}
+            <p className="text-gray-600">{humidity !== null ? `${humidity} %` : 'Carregando...'}</p>
           </div>
 
           {/* Histórico */}
@@ -97,4 +77,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard
+export default Dashboard;
