@@ -2,15 +2,7 @@ from flask import request, jsonify
 import hashlib
 from config import app, db
 from models import User, Contact, Sensor
-import requests
-
-@app.route("/contacts", methods=["GET"])
-def get_contacts():
-    users = User.query.all()
-    json_users = list(map(lambda x: x.to_json(), users))
-    return jsonify({
-        "users": json_users
-    })
+import requests 
 
 @app.route("/cadastro", methods=["POST"])
 def cadastro(): 
@@ -85,47 +77,37 @@ def login():
     else:
         return jsonify({"message": "Usuário não cadastrado"}), 401
 
-@app.route("/sensor_upload", methods=["POST"])
-def sensorUpload():
-    temperatura = request.json.get("Temperatura")
-    umidade = request.json.get("Umidade")
-    image = request.json.get("Image")
 
-    if not temperatura or not umidade or not image:
-        return jsonify({"message": "Temperatura e/ou umidade e/ou imagem não fornecidas corretamente"}), 400
-
-    new_data(temperatura=temperatura, umidade=umidade, image=image)
-
-    try:
-        db.session.add(new_data)
-        db.session.commit()
-    except Exception as e:
-        return jsonify({
-            "message": str(e)
-        }), 400
-
-    return jsonify({
-        "message": "Dados dos sensores cadastrados com sucesso"
-    }), 201
-
-@app.route("/sensores", methods=['POST'])
-def add_sensor_data():
+@app.route('/sensores', methods=['POST'])
+def receber_dados_sensores():
     try:
         data = request.get_json()
+        print("Dados recebidos no POST:", data)  # Log para depuração
 
-        temperatura = data.get('temperatura')
-        umidade = data.get('umidade')
-        image_base64 = data.get('image', None)
+        temperature = data.get('temperatura')
+        humidity = data.get('umidade')
 
-        new_sensor = Sensor(temperatura=temperatura, umidade=umidade, image_base64=image_base64)
-        db.session.add(new_sensor)
-        db.session.commit()
+        if temperature is not None and humidity is not None:
+            new_sensor = Sensor(
+                temperature=temperature,
+                humidity=humidity,
+            )
 
-        return jsonify(new_sensor.to_json()), 201
+            db.session.add(new_sensor)
+            db.session.commit()
+
+            print("Dados armazenados:", new_sensor.to_json())  # Log para depuração
+
+            return jsonify({'message': 'Dados recebidos e salvos com sucesso'}), 201
+        else:
+            return jsonify({'error': 'Dados de temperatura e umidade não podem ser nulos'}), 400
+
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        print("Erro ao processar dados dos sensores:", str(e))  # Log para depuração
+        return jsonify({'error': 'Erro ao processar dados dos sensores', 'message': str(e)}), 400
 
-@app.route('/sensor_history', methods=['GET'])
+
+@app.route('/get_sensores', methods=['GET'])
 def sensor_history():
     try:
         sensors = Sensor.query.all()
@@ -133,6 +115,7 @@ def sensor_history():
         return jsonify(sensor_data), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
+
 
 @app.route("/cadastro_contato", methods=["POST"])
 def cadastro_Contato():
@@ -178,4 +161,4 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True, port=8000)
+    app.run(host='0.0.0.0', debug=True, port=8000)
