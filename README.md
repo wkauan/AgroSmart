@@ -4,7 +4,7 @@ Bem-vindo ao AgroSmart, onde a inovação transforma a agricultura. Nosso sistem
 
 ## Necessário para rodar o projeto
 - `Python`: Instale o python em [https://www.python.org/downloads/]
-- `NodeJS`: Instale o nodejs em [https://nodejs.org/en/download/current]
+- `NodeJS`: Instale o nodejs em [https://nodejs.org/pt]
 
 ## Como executar o projeto
 
@@ -46,6 +46,6 @@ Se encontrar dificuldades ao iniciar a virtual environment (venv), execute o seg
 ## Warning
 ```console
     Não é possível rodar o projeto sem a ESP32 e suas devidas configurações de rede!!
-    
+
     Por questões de segurança existe uma chave de acesso em um arquivo de ambiente, sem ele não é possível realizar cadastro e login
 ```
