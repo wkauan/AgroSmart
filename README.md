@@ -42,3 +42,10 @@ Se encontrar dificuldades ao iniciar a virtual environment (venv), execute o seg
 | **Desenvolvedor Back-End** | Kauan Bomfim |
 | **Banco de dados** | Kauan Bomfim |
 | **Desenvolvedor ESP32** | Thiago Rodrigues e Vitor Carvalho |
+
+## Warning
+```console
+    Não é possível rodar o projeto sem a ESP32 e suas devidas configurações de rede!!
+    
+    Por questões de segurança existe uma chave de acesso em um arquivo de ambiente, sem ele não é possível realizar cadastro e login
+```
