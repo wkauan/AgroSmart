@@ -49,3 +49,16 @@ Se encontrar dificuldades ao iniciar a virtual environment (venv), execute o seg
 
     Por questões de segurança existe uma chave de acesso em um arquivo de ambiente, sem ele não é possível realizar cadastro e login
 ```
+### Configuração da ESP
+```console
+    Na pasta esp_code, vc pode encontrar o código usado em nosso projeto, suba ele em sua ESP.
+
+    Após isso, crie um ip fixo na sua rede da seguinte maneira:
+    IP - 192.168.0.10
+    Máscara - 255.255.255.0
+    Gateway - 192.168.0.1
+
+    DNS - 192.168.0.1
+
+    digite ping 192.168.0.100 em seu CMD para verificar se a conexão com a ESP foi feita. Lembre-se de ligar a ESP na energia.
+```
