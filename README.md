@@ -1,4 +1,4 @@
-# AgroSmart
+<img src="./docs/capa_projeto.png">
 
 Bem-vindo ao AgroSmart, onde a inovação transforma a agricultura. Nosso sistema utiliza sensores avançados de temperatura e umidade, junto com câmeras ESP32, para monitorar sua plantação em tempo real. Todas as informações são exibidas em um dashboard intuitivo, permitindo que você tome decisões informadas, aumente a produtividade e garanta a saúde das suas plantas como nunca antes.
 
